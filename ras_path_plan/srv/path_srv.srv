@@ -1,0 +1,9 @@
+#Map
+float64 startx
+float64 starty
+float64 goalx
+float64 goaly
+---
+#Res
+nav_msgs/Path planned_path
+

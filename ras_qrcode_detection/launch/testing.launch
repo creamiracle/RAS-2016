@@ -1,0 +1,21 @@
+<launch>
+
+    <include file="$(find realsense_camera)/launch/sr300_nodelet_rgbd.launch"/>
+
+    <!-- TF Broadcasters -->
+    <node pkg="robot8_pose_broadcaster" type="pose_broadcaster" name="odom_broadcaster"/>
+    <node pkg="robot8_laser_broadcaster" type="laser_broadcaster" name="laser_broadcaster"/>
+    <node pkg="robot8_camera_broadcaster" type="camera_broadcaster" name="camera_broadcaster"/>
+    <node pkg="robot8_uarm_broadcaster" type="uarm_broadcaster" name="uarm_broadcaster"/>
+    <node pkg="robot8_pose_broadcaster" type="loc_broadcaster" name="loc_broadcaster"/>
+
+    <!-- Rubble detector -->
+    <node pkg="ras_qrcode_detection" type="ras_qrcode_detection_node" name="ras_qrcode_detection_node" output="screen"/>
+
+    <!-- Uarm core -->
+    <node pkg="uarm" type="kth_uarm_core.py" name="kth_uarm_core"/>
+
+    <!-- uarm controller -->
+    <node pkg="ras_uarm_controller" type="uarm_controller" name="uarm_controller"/>
+
+</launch>

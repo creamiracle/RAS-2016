@@ -1,0 +1,6 @@
+<launch>
+	<node pkg="ras_object_list" type="ras_object_list" name="object_list" output="screen">
+        <param name="object_frame" type="string" value="world"/>
+        <param name="object_file" type="string" value="/home/ras28/catkin_ws/src/ras_color_detection/result/objectlist.txt"/>
+    </node>
+</launch>

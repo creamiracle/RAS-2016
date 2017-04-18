@@ -1,0 +1,4 @@
+<launch>
+	<node pkg="ras_object_list" type="ras_object_list" name="object_list" output="screen" >
+    </node>
+</launch>
