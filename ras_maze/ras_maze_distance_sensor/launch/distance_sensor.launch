@@ -1,0 +1,27 @@
+<launch>
+  
+  <!-- Distance sensor placement -->
+  <node pkg="tf" type="static_transform_publisher" name="distance_sensor_front_left_link"
+        args="0.1 0.13 0.09 3.1416 0 0  /base_link /distance_sensor_front_left_link 100" />
+  
+  <node pkg="tf" type="static_transform_publisher" name="distance_sensor_back_left_link"
+        args="-0.1 0.13 0.09 3.1416 0 0  /base_link /distance_sensor_back_left_link 100" />
+
+  <node pkg="tf" type="static_transform_publisher" name="distance_sensor_front_right_link"
+        args="0.1 -0.13 0.09 0 0 0  /base_link /distance_sensor_front_right_link 100" />
+  
+  <node pkg="tf" type="static_transform_publisher" name="distance_sensor_back_right_link"
+        args="-0.1 -0.13 0.09 0 0 0  /base_link /distance_sensor_back_right_link 100" />
+
+
+  <!-- FORWARD SENSORS -->
+  <node pkg="tf" type="static_transform_publisher" name="distance_sensor_forward_right_link"
+        args="0.12 -0.13 0.09 1.5707 0 0  /base_link /distance_sensor_forward_right_link 100" />
+  
+  <node pkg="tf" type="static_transform_publisher" name="distance_sensor_forward_left_link"
+        args="0.12 0.13 0.09 1.5707 0 0  /base_link /distance_sensor_forward_left_link 100" />
+  
+  <node pkg="ras_maze_distance_sensor" type="generate_distance_node_maze" name="generate_distance_node_maze" output="screen" >
+    <remap from="/adc" to="/kobuki/adc" />
+  </node>
+</launch>

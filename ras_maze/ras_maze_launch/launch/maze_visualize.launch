@@ -1,0 +1,23 @@
+<launch>
+
+  <arg name="map_file" default="contest_maze_2016.txt" />
+  <arg name="x_offset" default="0.2"/>
+  <arg name="y_offset" default="0.2"/>
+  <arg name="theta_offset" default="0.0"/>
+
+  <!-- load the world node -->
+  <node pkg="ras_maze_map" type="ras_maze_map_node" name="ras_maze_map_node"  >
+	 <param name="map_file" value="$(find ras_maze_map)/maps/$(arg map_file)"/>
+  </node>
+
+  <!-- run rviz -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find ras_maze_launch)/config/maze.rviz" />
+
+  <!-- publish the transform from odom to map frames -->
+  <include file="$(find ras_maze_launch)/launch/static_tf.launch">
+	<arg name="x_offset" value="$(arg x_offset)"/>
+	<arg name="y_offset" value="$(arg y_offset)"/>
+	<arg name="theta_offset" value="$(arg theta_offset)"/>
+  </include>
+
+</launch>

@@ -1,0 +1,58 @@
+<launch>
+
+    <!-- Laser Scanner -->
+    <node name="rplidarNode"          pkg="rplidar_ros"  type="rplidarNode">
+        <param name="serial_port"         type="string" value="/dev/ttyUSB0"/>
+        <param name="serial_baudrate"     type="int"    value="115200"/>
+        <param name="frame_id"            type="string" value="laser"/>
+        <param name="inverted"            type="bool"   value="false"/>
+        <param name="angle_compensate" type="bool" value="true"/>
+    </node>
+
+    <!--Path-following -->
+    <node pkg="ras_follower" type="path_follower" name="path_follower" output="screen">
+        <param name="a" type="double" value="2.0"/>
+        <param name="b" type="double" value="1"/>
+        <param name="alpha" value="0.087266"/>
+        <param name="l" type="int" value="5"/>
+        <param name="T" type="int" value="1000"/>
+        <param name="s_max" type="int" value="18"/>
+        <param name="h_m" value="700.0"/>
+        <param name="P_angle" value="1"/>
+        <param name="V_max" value="0.15"/>
+        <param name="window_size" value="1"/>
+        <param name="robot_width" value="0.35"/>
+    </node>
+
+    <!-- Map visualization -->
+    <arg name="map_file" default="lab_maze_2016.txt" />
+    <node pkg="ras_maze_map" type="ras_maze_map_node" name="ras_maze_map_node"  >
+         <param name="map_file" value="$(find ras_maze_map)/maps/$(arg map_file)"/>
+    </node>
+    <!-- TF map to world -->
+    <node pkg="tf" type="static_transform_publisher" name="odom_to_map"
+        args="0.0 0.0 0.0 0 0 0 /world /map 100" />
+
+    <!-- TF Broadcasters -->
+    <node pkg="robot8_pose_broadcaster" type="pose_broadcaster" name="odom_broadcaster"/>
+    <node pkg="robot8_laser_broadcaster" type="laser_broadcaster" name="laser_broadcaster"/>
+    <node pkg="robot8_camera_broadcaster" type="camera_broadcaster" name="camera_broadcaster"/>
+    <node pkg="robot8_uarm_broadcaster" type="uarm_broadcaster" name="uarm_broadcaster"/>
+    <node pkg="robot8_pose_broadcaster" type="loc_broadcaster" name="loc_broadcaster"/>
+
+    <!--    Mapping      -->
+    <node pkg="ras_mapping" type="map_builder" name="map_builder" output="screen">
+        <param name="map_frame" type="string" value="world"/>
+        <param name="map_resolution" type="double" value="0.018"/>
+        <param name="robot_width" type="double" value="0.36"/>
+        <param name="grid_resolution" type="double" value="0.018"/>
+        <param name="max_cell_value" value="10"/>
+        <param name="map_file" type="string" value="/home/ras28/catkin_ws/src/ras_maze/ras_maze_map/maps/lab_maze_2016.txt"/>
+    </node>
+
+    <node pkg="turtlesim" name="mimic" type="mimic">
+        <remap from="input" to="/move_base_simple/goal"/>
+        <remap from="output" to="/localization/pose"/>
+    </node>
+
+</launch>

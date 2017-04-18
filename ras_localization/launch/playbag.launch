@@ -1,0 +1,46 @@
+<launch>
+    
+
+    <!-- TF -->
+    <node pkg="robot8_pose_broadcaster" type="pose_broadcaster" name="pose_broadcaster"/>
+    <node pkg="robot8_laser_broadcaster" type="laser_broadcaster" name="laser_broadcaster"/>
+    <node pkg="robot8_camera_broadcaster" type="camera_broadcaster" name="camera_broadcaster"/>
+    <node pkg="robot8_uarm_broadcaster" type="uarm_broadcaster" name="uarm_broadcaster"/>
+    <node pkg="robot8_pose_broadcaster" type="loc_broadcaster" name="loc_broadcaster"/>
+
+    <!-- Map visualization -->
+    <arg name="map_file" default="lab_maze_2016.txt" />
+    <node pkg="ras_maze_map" type="ras_maze_map_node" name="ras_maze_map_node"  >
+         <param name="map_file" value="$(find ras_maze_map)/maps/$(arg map_file)"/>
+    </node>
+    <!-- TF map to world -->
+    <node pkg="tf" type="static_transform_publisher" name="odom_to_map"
+        args="0.0 0.0 0.0 0 0 0 /world /map 100" />
+
+    <!-- Localization -->
+    
+    <node name="localization" pkg="ras_localization" type="localization" >
+        <param name="map_frame" type="string" value="world"/>
+        <param name="map_file" type="string" value="/home/ras28/catkin_ws/src/ras_maze/ras_maze_map/maps/lab_maze_2016.txt"/>
+        <param name="wall_thickness" type="double" value="0.018"/>
+        <param name="motion_variance_v" type="double" value="0.001"/>
+        <param name="motion_variance_w" type="double" value="0.004"/>
+        <param name="laser_variance" type="double" value="0.025"/>
+        <param name="particle_quantity" type="int" value="1000"/>
+        <param name="weight_combo_method" type="int" value="2"/>
+        <param name="x_init" type="double" value="2.24"/>
+        <param name="y_init" type="double" value="0.20"/>
+        <param name="z_init" type="double" value="1.5707963"/>
+        <param name="gaussian_premultiplier" type="double" value="1"/>
+        <param name="laser_min_range" type="double" value="0.05"/>
+        <param name="tracking" type="bool" value="true"/>
+        <param name="interlaced" type="bool" value="true"/>
+        <param name="addnoise" type="bool" value="true"/>
+        <param name="noiseincallback" type="bool" value="false"/>
+        <param name="resample" type="bool" value="true"/>
+        <param name="laser_skip" type="int" value="10"/>
+    </node>
+
+    <node pkg="rosbag" type="play" name="player" output="screen" args="--clock /home/ras28/catkin_ws/src/ras_localization/2016-11-16-11-15-54.bag"/>
+
+</launch>

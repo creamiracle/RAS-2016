@@ -1,0 +1,9 @@
+<launch>
+  <arg name="x_offset" default="0.2"/>
+  <arg name="y_offset" default="0.2"/>
+  <arg name="theta_offset" default="0.0"/>
+  <!-- static odom to map transform  -->
+  <node pkg="tf" type="static_transform_publisher" name="odom_to_map"
+        args="$(arg x_offset) $(arg y_offset) 0.0 $(arg theta_offset) 0 0 /map /odom 100" />
+
+</launch>

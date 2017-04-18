@@ -1,0 +1,34 @@
+<launch>
+    <!-- Map buider -->
+    <node pkg="ras_mapping" type="map_builder" name="map_builder" output="screen" >
+        <param name="map_frame" type="string" value="world"/>
+        <param name="map_file" type="string" value="/home/ras28/catkin_ws/src/ras_maze/ras_maze_map/maps/contest_maze_2016.txt" />
+        <param name="map_resolution" type="double" value="0.018"/>
+        <param name="robot_width" type="double" value="0.360"/>
+    </node>
+
+    <!-- Map visualization -->
+    <arg name="map_file" default="lab_maze_2016.txt" />
+    <node pkg="ras_maze_map" type="ras_maze_map_node" name="ras_maze_map_node"  >
+         <param name="map_file" value="$(find ras_maze_map)/maps/$(arg map_file)"/>
+    </node>
+    <!-- TF map to world -->
+    <node pkg="tf" type="static_transform_publisher" name="odom_to_map"
+        args="0.0 0.0 0.0 0 0 0 /world /map 100" />
+
+    <!-- Laser Scanner -->
+    <node name="rplidarNode"          pkg="rplidar_ros"  type="rplidarNode">
+        <param name="serial_port"         type="string" value="/dev/ttyUSB0"/>
+        <param name="serial_baudrate"     type="int"    value="115200"/>
+        <param name="frame_id"            type="string" value="laser"/>
+        <param name="inverted"            type="bool"   value="false"/>
+        <param name="angle_compensate" type="bool" value="true"/>
+    </node>
+
+    <!-- TF Broadcasters -->
+    <node pkg="robot8_pose_broadcaster" type="pose_broadcaster" name="odom_broadcaster"/>
+    <node pkg="robot8_laser_broadcaster" type="laser_broadcaster" name="laser_broadcaster"/>
+    <node pkg="robot8_camera_broadcaster" type="camera_broadcaster" name="camera_broadcaster"/>
+    <node pkg="robot8_uarm_broadcaster" type="uarm_broadcaster" name="uarm_broadcaster"/>
+    <node pkg="robot8_pose_broadcaster" type="loc_broadcaster" name="loc_broadcaster"/>
+</launch>
