@@ -1,0 +1,7 @@
+<launch>
+  <param name="outfile" value="$(find ras_lab1_ds_calib)/src/data.txt" />
+  <rosparam file="$(find ras_lab1_ds_calib)/config/params.yaml" command="load" />
+  <node name="distance_sensor_test_node" pkg="ras_lab1_distance_sensor" type="distance_sensor_test_node" />
+  <node name="sensor_calib" pkg="ras_lab1_ds_calib" type="sensor_calib" output="screen" />
+
+</launch>

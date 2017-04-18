@@ -1,0 +1,9 @@
+# Define the goal
+float32 tolerance
+geometry_msgs/Twist goal # Specify the goal pose in the world frame
+---
+# Define the result
+geometry_msgs/Twist final # Return the final pose tat was actually reached
+---
+# Define a feedback message
+geometry_msgs/Twist next # Inform about the next intermediate goal

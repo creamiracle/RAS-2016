@@ -1,0 +1,2 @@
+robot: {wheel_baseline: 0.23, wheel_radius: 0.0352}
+controller: {left_gain: 0.5, right_gain: 0.5, control_freq: 10, ticks_per_rev: 360}

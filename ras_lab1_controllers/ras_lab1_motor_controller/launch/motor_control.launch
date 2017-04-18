@@ -1,0 +1,6 @@
+<launch>
+  <include file="$(find ras_lab1_launch)/launch/kobuki_lab1.launch" />
+  <rosparam file="$(find ras_lab1_motor_controller)/config/params.yaml" command="load" />
+  <node name="motor_control" pkg="ras_lab1_motor_controller" type="motor_control" />
+
+</launch>

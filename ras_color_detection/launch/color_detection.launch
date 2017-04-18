@@ -1,0 +1,10 @@
+<launch>
+    <node name="color_detection" pkg="ras_color_detection" type="color_detection_node" output="screen">
+        <param name="centerH" value="50" type="int" />
+        <param name="centerS" value="90" type="int" />
+        <param name="centerV" value="70" type="int" />
+        <param name="spanH" value="7" type="int" />
+        <param name="spanS" value="10" type="int" />
+        <param name="spanV" value="30" type="int" />
+    </node>
+</launch>

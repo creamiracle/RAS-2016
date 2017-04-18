@@ -1,0 +1,5 @@
+<launch>
+  <include file="$(find ras_lab1_launch)/launch/kobuki_lab1.launch" />
+  <node name="motor_control" pkg="ras_lab1_motor_controller" type="motor_control" />
+  <node name="wall_follow" pkg="ras_lab1_cartesian_controllers" type="wall_follow" />
+</launch>

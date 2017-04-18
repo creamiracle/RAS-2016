@@ -1,0 +1,22 @@
+<launch>
+
+  <!-- launch the kobuki simulation -->
+  <include file="$(find kobuki_softnode)/launch/full.launch" />
+
+  <!-- launch the distance sensors -->  
+  <include file="$(find ras_lab1_distance_sensor)/launch/distance_sensor.launch" />
+
+  <!-- run the motors -->
+  <node pkg="ras_lab1_motors" type="kobuki_motors_node" name="kobuki_motors" >
+    <remap from="/kobuki_motors/pwm" to="/kobuki/pwm" />
+    <remap from="/kobuki_motors/encoders" to="/kobuki/encoders" />
+  </node>
+
+  <!-- load the world node -->
+  <node pkg="ras_lab1_world" type="world_node" name="world" />
+
+  <!-- run rviz -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find ras_lab1_launch)/config/lab1.rviz" />
+
+
+</launch>

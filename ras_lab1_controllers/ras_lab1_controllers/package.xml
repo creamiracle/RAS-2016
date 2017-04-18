@@ -1,0 +1,15 @@
+<package>
+  <name>ras_lab1_controllers</name>
+  <version>1.2.4</version>
+  <description>
+    This is a package
+  </description>
+  <maintainer email="linqi@kth.se">me</maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <export>
+   <metapackage />
+ </export>
+</package>

@@ -1,0 +1,2 @@
+# for ~straight line:open_loop: {left_set: 255, right_set: 225}
+open_loop: {left_set: 255, right_set: 255}

@@ -1,0 +1,19 @@
+<package>
+  <name>ras_lab1_open_loop_control</name>
+  <version>1.2.4</version>
+  <description>
+    This is a package
+  </description>
+  <maintainer email="linqi@kth.se">me</maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roscpp</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>ras_arduino_msgs</build_depend>
+
+  <run_depend>roscpp</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>ras_arduino_msgs</run_depend>
+</package>
