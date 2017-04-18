@@ -1,0 +1,56 @@
+<launch>
+
+    <include file="$(find realsense_camera)/launch/sr300_nodelet_rgbd.launch"/>
+
+    <!-- Laser Scanner -->
+    <node name="rplidarNode"          pkg="rplidar_ros"  type="rplidarNode">
+        <param name="serial_port"         type="string" value="/dev/ttyUSB0"/>
+        <param name="serial_baudrate"     type="int"    value="115200"/>
+        <param name="frame_id"            type="string" value="laser"/>
+        <param name="inverted"            type="bool"   value="false"/>
+        <param name="angle_compensate" type="bool" value="true"/>
+    </node>
+
+    <!--    Mapping      -->
+    <node pkg="ras_mapping" type="map_builder" name="map_builder" output="screen">
+        <param name="N" type="int" value="20"/>
+        <param name="map_frame" type="string" value="world"/>
+    </node>
+
+    <!-- TF Broadcasters -->
+    <node pkg="robot8_pose_broadcaster" type="pose_broadcaster" name="pose_broadcaster"/>
+    <node pkg="robot8_laser_broadcaster" type="laser_broadcaster" name="laser_broadcaster"/>
+    <node pkg="robot8_camera_broadcaster" type="camera_broadcaster" name="camera_broadcaster"/>
+    <node pkg="robot8_uarm_broadcaster" type="uarm_broadcaster" name="uarm_broadcaster"/>
+
+    <!-- Motor controller -->
+    <node pkg="robotgroup8_motor_controller" type="motor_controller" name="motor_controller">
+        <param name="alpha" type="double" value="1"/>
+        <param name="I" type="double" value="0.4"/>
+    </node>
+
+    <!-- Uarm -->
+    <node pkg="uarm" type="uarm_core.py" name="uarm_core" args="connect l"/>
+
+    <!-- Odometry -->
+    <node pkg="ras_odometry" type="ras_odometry_node" name="odometry"/>
+
+    <!-- Motors -->
+    <node name="right" pkg="phidgets" type="motor" >
+        <param name="serial" value="473021" />
+        <param name="name" type="string" value="right"/>
+        <param name="frequency" type="int" value="10"/>
+    </node>
+
+    <node name="left" pkg="phidgets" type="motor">
+        <param name="serial" value="475406" />
+        <param name="frequency" type="int" value="10"/>
+        <param name="name" type="string" value="left"/>
+    </node>
+
+    <!-- Color-based object detection -->
+    <node pkg="ras_color_detection" type="color_detection_node" name="color_detection_node"/>
+
+    <!--Keyboard node-->
+    <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="keyboard_controller" output="screen" />
+</launch>

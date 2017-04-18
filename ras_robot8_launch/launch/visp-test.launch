@@ -1,0 +1,14 @@
+<launch>
+
+    <!-- <include file="$(find realsense_camera)/launch/sr300_nodelet_rgbd.launch"/> -->
+
+    <node name="visp_auto_tracker" type="visp_auto_tracker" pkg="visp_auto_tracker">
+        <param name="model_path" type="string" value="/home/ras28/catkin_ws/src/ras_visp_auto_tracker/config/"/>
+        <param name="model_name" type="string" value="model"/>
+        
+
+        <remap from="/visp_auto_tracker/camera_info" to="/camera/rgb/camera_info"/>
+        <remap from="/visp_auto_tracker/image_raw" to="/camera/rgb/image_raw"/>
+    </node>
+
+</launch>

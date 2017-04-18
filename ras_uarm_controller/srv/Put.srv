@@ -1,0 +1,4 @@
+#Goal
+geometry_msgs/Point point
+---
+#result: Is the move possible

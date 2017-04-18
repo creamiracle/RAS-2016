@@ -1,0 +1,45 @@
+<launch>
+
+    <!-- Laser Scanner -->
+    <node name="rplidarNode"          pkg="rplidar_ros"  type="rplidarNode">
+        <param name="serial_port"         type="string" value="/dev/ttyUSB0"/>
+        <param name="serial_baudrate"     type="int"    value="115200"/>
+        <param name="frame_id"            type="string" value="laser"/>
+        <param name="inverted"            type="bool"   value="false"/>
+        <param name="angle_compensate" type="bool" value="true"/>
+    </node>
+
+    <!-- TF Broadcasters -->
+    <node pkg="robot8_pose_broadcaster" type="pose_broadcaster" name="pose_broadcaster"/>
+    <node pkg="robot8_laser_broadcaster" type="laser_broadcaster" name="laser_broadcaster"/> 
+
+    <!-- Motor controller -->
+    <node pkg="robotgroup8_motor_controller" type="motor_controller" name="motor_controller">
+        <param name="alpha" type="double" value="1"/>
+        <param name="I" type="double" value="0.4"/>
+    </node>
+    
+
+    <!-- Odometry -->
+    <node pkg="ras_odometry" type="ras_odometry_node" name="odometry"/>
+
+    <!-- Motors -->
+    <node name="right" pkg="phidgets" type="motor" >
+        <param name="serial" value="473021" />
+        <param name="name" type="string" value="right"/>
+	<param name="frequency" type="int" value="10"/>
+    </node>
+    
+    <node name="left" pkg="phidgets" type="motor">
+        <param name="serial" value="475406" />
+	<param name="frequency" type="int" value="10"/>
+        <param name="name" type="string" value="left"/>
+    </node>
+
+    <!--Keyboard node-->
+    <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="keyboard_controller" output="screen" />
+
+    
+</launch>
+
+

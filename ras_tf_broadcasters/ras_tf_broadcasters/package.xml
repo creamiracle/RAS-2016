@@ -1,0 +1,18 @@
+<package>
+  <name>ras_tf_broadcasters</name>
+  <version>0.1.0</version>
+  <description>
+    Packages for TF_broadcasters
+  </description>
+  <license>BSD</license>
+  <author email="davidten@kth.se">David Tennander</author>
+  <maintainer email="davidten@kth.se">David Tennander</maintainer>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <run_depend>std_msgs</run_depend>
+
+  <export>
+    <metapackage/>
+  </export>
+</package>

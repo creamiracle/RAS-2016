@@ -1,0 +1,12 @@
+<launch>
+    <!-- Map visualization -->
+    <arg name="map_file" default="lab_maze_2016.txt" />
+    <node pkg="ras_maze_map" type="ras_maze_map_node" name="ras_maze_map_node"  >
+         <param name="map_file" value="$(find ras_maze_map)/maps/$(arg map_file)"/>
+    </node>
+    <!-- TF map to world -->
+    <node pkg="tf" type="static_transform_publisher" name="odom_to_map"
+        args="0.0 0.0 0.0 0 0 0 /world /map 100" />
+    <!-- Vornoi map builder -->
+    <node pkg="ras_vornoi_builder" type="vornoi" name="vornoi" launch-prefix="xterm -e gdb --args"/>
+</launch>

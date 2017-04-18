@@ -1,0 +1,27 @@
+<launch>
+
+    <!-- Motor controller -->
+    <node pkg="robotgroup8_motor_controller" type="motor_controller" name="motor_controller" launch-prefix="xterm -e gdb --args">
+        <param name="I" type="double" value="0.1"/>
+        <param name="P" type="double" value="0.5"/>
+        <param name="c" type="double" value="4.5"/>
+        <param name="f" type="double" value="25"/>
+    </node>
+
+    <!-- Motors -->
+    <node name="right" pkg="phidgets" type="motor" >
+        <param name="serial" value="473021" />
+        <param name="name" type="string" value="right"/>
+    <param name="frequency" type="int" value="10"/>
+    </node>
+    
+    <node name="left" pkg="phidgets" type="motor">
+        <param name="serial" value="475406" />
+    <param name="frequency" type="int" value="10"/>
+        <param name="name" type="string" value="left"/>
+    </node>
+
+    <!--Keyboard node-->
+    <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="keyboard_controller" output="screen" />
+
+</launch>
